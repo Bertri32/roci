@@ -26,24 +26,12 @@
             to {transform: translateY(-100vh); opacity: 0;}
         }
 
-        @keyframes pop {
-            0% {transform: scale(0); opacity: 1;}
-            50% {transform: scale(1.5); opacity: 0.8;}
-            100% {transform: scale(1); opacity: 0;}
-        }
-
-        @keyframes sparkle {
-            0% {opacity: 0; transform: scale(0.5);}
-            50% {opacity: 1; transform: scale(1.2);}
-            100% {opacity: 0; transform: scale(0.5);}
-        }
-
         @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity: 1;}
         }
 
-        .heart, .flower, .click-heart {
+        .heart {
             position: absolute;
             width: 20px;
             height: 20px;
@@ -51,28 +39,6 @@
             clip-path: polygon(50% 0%, 61% 12%, 75% 12%, 87% 25%, 87% 38%, 75% 50%, 50% 75%, 25% 50%, 13% 38%, 13% 25%, 25% 12%, 39% 12%);
             opacity: 0.8;
             animation: floating 6s linear infinite;
-        }
-
-        .flower {
-            background-color: #ffb3e6;
-            clip-path: circle(50%);
-            animation-duration: 10s;
-        }
-
-        .click-heart {
-            width: 30px;
-            height: 30px;
-            background-color: #ff66a3;
-            animation: pop 0.6s ease-out forwards;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, white, transparent);
-            border-radius: 50%;
-            animation: sparkle 2s infinite;
         }
 
         header {
@@ -87,10 +53,6 @@
             animation: fadeIn 2s ease-in-out;
         }
 
-        header:hover {
-            transform: scale(1.05);
-        }
-
         .container {
             max-width: 800px;
             margin: 40px auto;
@@ -98,12 +60,7 @@
             background: white;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
-            transition: transform 0.3s ease-in-out;
             animation: fadeIn 3s ease-in-out;
-        }
-
-        .container:hover {
-            transform: scale(1.02);
         }
 
         .love-message {
@@ -133,20 +90,67 @@
             transform: scale(1.05);
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #ff4d4d, #ff8585);
-            color: white;
-            margin-top: 20px;
+        .letter-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
             width: 100%;
-            font-weight: 500;
+            z-index: 1000;
+            text-align: center;
             transition: transform 0.3s ease-in-out;
-            animation: fadeIn 4s ease-in-out;
         }
 
-        footer:hover {
-            transform: scale(1.05);
+        .letter-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .message {
+            font-size: 20px;
+            color: #d63384;
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        .close-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background: #d63384;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .close-button:hover {
+            background: #b52d6f;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
         }
     </style>
 </head>
@@ -157,47 +161,43 @@
     <div class="container">
         <h2 style="color: #ff4d4d; font-weight: 600;">Te Amo Demasiado</h2>
         <p class="love-message">Felices 4 meses, amor mío. Gracias por cada momento a tu lado, eres lo mejor que me ha pasado. Por muchos meses y años más juntos. ❤️</p>
-        <a href="carta.html" class="letter-button">Carta para el amor de mi vida 💌</a>
+        <button class="letter-button" onclick="openLetter()">Carta para el amor de mi vida 💌</button>
     </div>
-    <footer>
-        <p>&copy; Nuestro Amor 2025. Por siempre juntos. 💕</p>
-    </footer>
 
-    <!-- Corazones y flores flotantes -->
+    <!-- Modal Carta -->
+    <div class="overlay" id="overlay"></div>
+    <div class="letter-modal" id="letterModal">
+        <p class="message">Bueno amor mio, no se como empezar esto, primero que nada ojala que te guste la sorpresita, la hice con mucho amor.
+            Segundo ya 4 meses al lado del amor de mi vida. No puedo estar más agradecido de tener una novia como vos, tenes todo para hacerme feliz, me entendes, me amas, sos todo para mí. 4 meses en los que me levanto y la primera persona en la que pienso es en vos y decirle buenos días. Gracias a Dios que esa persona sos vos. Quiero que sepas (aunque ya lo sabes) que sos muy especial para mí, sos la persona que quiero conmigo para el resto de mi vida.
+            <br><br>
+            TE AMO CON TODO MI COCORO.
+            <br>
+            Amo tus besitos, tus abrazos, todo de vos.
+            <br>
+            A por más meses juntos y OJALA AÑOS.
+            <br>
+            Te amo pupina hermosa ❤️
+        </p>
+        <button class="close-button" onclick="closeLetter()">Cerrar</button>
+    </div>
+
+    <!-- Corazones flotantes -->
     <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="flower" style="left: 20%; animation-delay: 1s;"></div>
-    <div class="heart" style="left: 30%; animation-delay: 2s;"></div>
-    <div class="flower" style="left: 40%; animation-delay: 3s;"></div>
-    <div class="heart" style="left: 50%; animation-delay: 4s;"></div>
-    <div class="flower" style="left: 60%; animation-delay: 5s;"></div>
-    <div class="heart" style="left: 70%; animation-delay: 6s;"></div>
-    <div class="flower" style="left: 80%; animation-delay: 7s;"></div>
-    <div class="heart" style="left: 90%; animation-delay: 8s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="heart" style="left: 90%; animation-delay: 4s;"></div>
 
     <script>
-        document.addEventListener('click', function(e) {
-            const heart = document.createElement('div');
-            heart.classList.add('click-heart');
-            heart.style.left = `${e.clientX - 15}px`;
-            heart.style.top = `${e.clientY - 15}px`;
-            document.body.appendChild(heart);
+        function openLetter() {
+            document.getElementById('letterModal').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
 
-            setTimeout(() => {
-                heart.remove();
-            }, 600);
-        });
-
-        setInterval(() => {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.left = `${Math.random() * 100}%`;
-            sparkle.style.top = `${Math.random() * 100}%`;
-            document.body.appendChild(sparkle);
-
-            setTimeout(() => {
-                sparkle.remove();
-            }, 2000);
-        }, 1000);
+        function closeLetter() {
+            document.getElementById('letterModal').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
     </script>
 </body>
 </html>
